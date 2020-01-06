@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10.0f;
     private Rigidbody2D _playerRB;
     private Vector2 leftStickInput;
+    private Vector2 rightStickInput;
     
     private void Start()
     {
@@ -23,10 +24,19 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 currentMovement = leftStickInput * moveSpeed * Time.deltaTime; 
         _playerRB.MovePosition(_playerRB.position + currentMovement);
+
+        if(rightStickInput.magnitude > 0f)
+        {
+            Vector3 currentRotation = Vector3.left * rightStickInput.x + Vector3.up * rightStickInput.y;
+            Quaternion playerRotation = Quaternion.LookRotation(currentRotation, Vector3.forward);
+
+            _playerRB.SetRotation(playerRotation);
+        }
     }
 
     private void GetPlayerInput()
     {
         leftStickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        rightStickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
     }
 }
