@@ -16,7 +16,7 @@ TagManager:
   - Survivors
   - Zombies
   - Environment
-  - 
+  - InvisibleWalls
   - 
   - 
   - 
@@ -38,12 +38,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Environment
-    uniqueID: 3966352453
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 1992278595
+    locked: 0
+  - name: Environment
+    uniqueID: 3966352453
+    locked: 0
+  - name: Rubble
+    uniqueID: 976200773
+    locked: 0
+  - name: Walls
+    uniqueID: 19313551
+    locked: 0
+  - name: Enemies
+    uniqueID: 765564289
+    locked: 0
   - name: Survivors
     uniqueID: 1103272049
+    locked: 0
+  - name: Player
+    uniqueID: 3258446329
     locked: 0
