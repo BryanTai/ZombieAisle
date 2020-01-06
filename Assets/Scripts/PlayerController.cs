@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     private void GetPlayerInput()
     {
         leftStickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        //TODO: Read Mouse input too
         rightStickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
     }
 }

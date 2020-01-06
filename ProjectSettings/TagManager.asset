@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - Survivors
-  - Zombies
+  - Player
+  - Bullets
   - Environment
-  - InvisibleWalls
-  - 
+  - Walls
+  - Rubble
   - 
   - 
   - 
@@ -58,6 +58,9 @@ TagManager:
     locked: 0
   - name: Survivors
     uniqueID: 1103272049
+    locked: 0
+  - name: Bullets
+    uniqueID: 365054521
     locked: 0
   - name: Player
     uniqueID: 3258446329
