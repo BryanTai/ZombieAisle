@@ -9,28 +9,41 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private LineRenderer bulletEffect;
     [SerializeField] private float bulletEffectTime = 0.2f;
+    [SerializeField] private float timeBetweenShots = 0.5f;
 
-    private void Awake()
-    {
-        bulletEffect.enabled = false;
-    }
+    private bool canShoot;
 
-    private void Update()
+    public void ShootWeapon()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(canShoot)
         {
             StartCoroutine(Shoot());
         }
     }
 
+    private void Awake()
+    {
+        bulletEffect.enabled = false;
+        canShoot = true;
+    }
+
+    private IEnumerator ShotCooldown()
+    {
+        yield return new WaitForSeconds(timeBetweenShots);
+        canShoot = true;
+    }
+
     private IEnumerator Shoot()
     {
+        canShoot = false;
+
+        StartCoroutine(ShotCooldown());
+
         RaycastHit2D hitInfo = Physics2D.Raycast(FiringPoint.position, FiringPoint.up);
 
         if(hitInfo != null)
         {
             //TODO: Register enemy hit here
-            Debug.Log("BAP");
 
             bulletEffect.SetPosition(0, FiringPoint.position);
             bulletEffect.SetPosition(1, hitInfo.point);

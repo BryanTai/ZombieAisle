@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public WeaponController weaponController;
     public float moveSpeed = 10.0f;
+    
     private Rigidbody2D _playerRB;
     private Vector2 leftStickInput;
     private Vector2 rightStickInput;
@@ -40,5 +42,11 @@ public class PlayerController : MonoBehaviour
 
         //TODO: Read Mouse input too
         rightStickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
+
+        //if(Input.GetButtonDown("Shoot")) //only true once
+        if(Input.GetButton("Shoot")) //true as long as button is held
+        {
+            weaponController.ShootWeapon();
+        }
     }
 }
