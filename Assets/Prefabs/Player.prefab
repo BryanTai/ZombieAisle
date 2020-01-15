@@ -178,6 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponController: {fileID: 654805544415607218}
   moveSpeed: 5
+  useMouseAndKeyboard: 1
 --- !u!114 &654805544415607218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FiringPoint: {fileID: 4315640204526772138}
   bulletEffect: {fileID: 1482693454}
-  bulletEffectTime: 0.2
+  bulletEffectTime: 0.1
+  timeBetweenShots: 0.5
 --- !u!212 &1724622462867741080
 SpriteRenderer:
   m_ObjectHideFlags: 0

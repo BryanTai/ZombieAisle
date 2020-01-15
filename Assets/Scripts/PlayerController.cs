@@ -7,10 +7,13 @@ public class PlayerController : MonoBehaviour
 {
     public WeaponController weaponController;
     public float moveSpeed = 10.0f;
+
+    public bool useMouseAndKeyboard = false;
     
     private Rigidbody2D _playerRB;
-    private Vector2 leftStickInput;
-    private Vector2 rightStickInput;
+    private Vector2 movementVector;
+    private Vector2 rightJoystickInput;
+    private Vector2 mouseDirection;
     
     private void Start()
     {
@@ -24,27 +27,44 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 currentMovement = leftStickInput * moveSpeed * Time.deltaTime; 
+        Vector2 currentMovement = movementVector * moveSpeed * Time.deltaTime; 
         _playerRB.MovePosition(_playerRB.position + currentMovement);
 
-        if(rightStickInput.magnitude > 0f)
+        if (useMouseAndKeyboard)
         {
-            Vector3 currentRotation = Vector3.left * rightStickInput.x + Vector3.up * rightStickInput.y;
-            Quaternion playerRotation = Quaternion.LookRotation(currentRotation, Vector3.forward);
-
+            float mouseAngle = Mathf.Atan2(mouseDirection.y, mouseDirection.x) * Mathf.Rad2Deg - 90;
+            Quaternion playerRotation = Quaternion.AngleAxis(mouseAngle, Vector3.forward);
             _playerRB.SetRotation(playerRotation);
         }
+        else
+        {
+            if (rightJoystickInput.magnitude > 0f)
+            {
+                Vector3 currentRotation = Vector3.left * rightJoystickInput.x + Vector3.up * rightJoystickInput.y;
+                Quaternion playerRotation = Quaternion.LookRotation(currentRotation, Vector3.forward);
+                _playerRB.SetRotation(playerRotation);
+            }
+        }
+        
     }
 
     private void GetPlayerInput()
     {
-        leftStickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        movementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        //TODO: Read Mouse input too
-        rightStickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
+        if(useMouseAndKeyboard)
+        {
+            mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        }
+        else
+        {
+            //Player aiming
+            rightJoystickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
+
+        }
 
         //if(Input.GetButtonDown("Shoot")) //only true once
-        if(Input.GetButton("Shoot")) //true as long as button is held
+        if (Input.GetButton("Shoot")) //true as long as button is held
         {
             weaponController.ShootWeapon();
         }
