@@ -44,15 +44,15 @@ public class WeaponController : MonoBehaviour
         if(hitInfo != null)
         {
             //TODO: Register enemy hit here
-
             bulletEffect.SetPosition(0, FiringPoint.position);
             bulletEffect.SetPosition(1, hitInfo.point);
+            //bulletEffect.SetPosition(1, new Vector3(hitInfo.point.x, hitInfo.point.y));
         }
         else
         {
             //We missed!
             bulletEffect.SetPosition(0, FiringPoint.position);
-            bulletEffect.SetPosition(1, FiringPoint.position + FiringPoint.right * 100);
+            bulletEffect.SetPosition(1, FiringPoint.position + FiringPoint.up * 100);
         }
 
         bulletEffect.enabled = true;
