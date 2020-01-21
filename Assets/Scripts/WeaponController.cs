@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public Transform FiringPoint;
+    public int weaponDamage = 1;
 
     [SerializeField] private LineRenderer bulletEffect;
     [SerializeField] private float bulletEffectTime = 0.2f;
@@ -46,7 +47,12 @@ public class WeaponController : MonoBehaviour
             //TODO: Register enemy hit here
             bulletEffect.SetPosition(0, FiringPoint.position);
             bulletEffect.SetPosition(1, hitInfo.point);
-            //bulletEffect.SetPosition(1, new Vector3(hitInfo.point.x, hitInfo.point.y));
+
+            GruntController grunt = hitInfo.transform.GetComponent<GruntController>();
+            if(grunt != null)
+            {
+                grunt.TakeDamage(weaponDamage);
+            }
         }
         else
         {
