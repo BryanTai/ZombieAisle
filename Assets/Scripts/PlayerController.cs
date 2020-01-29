@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10.0f;
 
     public bool useMouseAndKeyboard = false;
+
     
+
     private Rigidbody2D _playerRB;
     private Vector2 movementVector;
     private Vector2 rightJoystickInput;
@@ -68,5 +71,10 @@ public class PlayerController : MonoBehaviour
         {
             weaponController.ShootWeapon();
         }
+    }
+
+    public void ToggleControls()
+    {
+        useMouseAndKeyboard = !useMouseAndKeyboard;
     }
 }

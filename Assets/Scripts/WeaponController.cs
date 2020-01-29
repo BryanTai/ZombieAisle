@@ -11,7 +11,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private LineRenderer bulletEffect;
     [SerializeField] private float bulletEffectTime = 0.2f;
     [SerializeField] private float timeBetweenShots = 0.5f;
+    [SerializeField] private float reloadTime = 2.0f;
 
+
+    private int currentAmmo;
     private bool canShoot;
 
     public void ShootWeapon()
@@ -64,5 +67,17 @@ public class WeaponController : MonoBehaviour
         bulletEffect.enabled = true;
         yield return new WaitForSeconds(bulletEffectTime);
         bulletEffect.enabled = false;
+    }
+
+    private IEnumerator ReloadCooldown()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        canShoot = true;
+    }
+
+    private void Reload()
+    {
+        canShoot = false;
+        StartCoroutine(ReloadCooldown());
     }
 }
