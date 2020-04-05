@@ -4,65 +4,65 @@ using UnityEngine;
 
 public class GruntController : MonoBehaviour
 {
-    public int hitPoints = 3;
+    public int HitPoints = 3;
+    public float Speed = 1.0f;
 
-    private SimplePF2D.Path path;
-    private Rigidbody2D rb;
-    private Vector3 nextPoint;
-    private bool isStationary;
-    private float speed = 5.0f;
+    private SimplePF2D.Path _path;
+    private Rigidbody2D _rb;
+    private Vector3 _nextPoint;
+    private bool _isStationary;
+    private Vector3 _endGoalPosition;
 
     private void Start()
     {
-        path = new SimplePF2D.Path(GameObject.Find("Grid").GetComponent<SimplePathFinding2D>());
-        rb = GetComponent<Rigidbody2D>();
-        nextPoint = Vector3.zero;
+        _rb = GetComponent<Rigidbody2D>();
+        _nextPoint = Vector3.zero;
+    }
+
+    public void Initialize(SimplePathFinding2D pathFinding2D, Vector3 endGoalPosition)
+    {
+        _path = new SimplePF2D.Path(pathFinding2D);
+        _endGoalPosition = endGoalPosition;
+
+        _path.CreatePath(transform.position, _endGoalPosition);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(_path.IsGenerated())
         {
-            Vector3 mouseworldpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseworldpos.z = 0.0f;
-
-            path.CreatePath(transform.position, mouseworldpos);
-        }
-
-        if(path.IsGenerated())
-        {
-            if(isStationary)
+            if(_isStationary)
             {
-                if(path.GetNextPoint(ref nextPoint))
+                if(_path.GetNextPoint(ref _nextPoint))
                 {
                     //Get the next point in the path as a world position
-                    rb.velocity = nextPoint - transform.position;
-                    rb.velocity = rb.velocity.normalized;
-                    rb.velocity *= speed;
-                    isStationary = false;
+                    _rb.velocity = _nextPoint - transform.position;
+                    _rb.velocity = _rb.velocity.normalized;
+                    _rb.velocity *= Speed;
+                    _isStationary = false;
                 }
                 else
                 {
                     //End of the path!
-                    rb.velocity = Vector3.zero;
-                    isStationary = true;
+                    _rb.velocity = Vector3.zero;
+                    _isStationary = true;
                 }
             }
             else
             {
-                Vector3 delta = nextPoint - transform.position;
+                Vector3 delta = _nextPoint - transform.position;
                 if(delta.magnitude <= 0.2f)
                 {
-                    rb.velocity = Vector3.zero;
-                    isStationary = true;
+                    _rb.velocity = Vector3.zero;
+                    _isStationary = true;
                 }
 
             }
         }
         else
         {
-            rb.velocity = Vector3.zero;
-            isStationary = true;
+            _rb.velocity = Vector3.zero;
+            _isStationary = true;
         }
     }
 
@@ -73,9 +73,9 @@ public class GruntController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        hitPoints -= damage;
+        HitPoints -= damage;
 
-        if(hitPoints <= 0)
+        if(HitPoints <= 0)
         {
             OnDeath();
         }

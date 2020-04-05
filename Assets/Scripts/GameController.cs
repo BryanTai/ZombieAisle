@@ -13,9 +13,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private Button ControlToggleDebugButton;
     [SerializeField] private Text ControlToggleDebugText;
 
-    private float startTime, elapsedTime;
+    private float _startTime, _elapsedTime;
 
     private PlayerController _player;
+    private ZombieSpawner _zombieSpawner;
 
     TimeSpan timePlaying;
 
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour
     {
         gamePlaying = false;
         _player = FindObjectOfType<PlayerController>();
+        _zombieSpawner = GetComponent<ZombieSpawner>();
 
         //Debug Controls
         if (ControlToggleDebugButton != null)
@@ -42,8 +44,8 @@ public class GameController : MonoBehaviour
     {
         if(gamePlaying)
         {
-            elapsedTime = Time.time - startTime;
-            timePlaying = TimeSpan.FromSeconds(elapsedTime);
+            _elapsedTime = Time.time - _startTime;
+            timePlaying = TimeSpan.FromSeconds(_elapsedTime);
 
             //string timeToDisplay = "Time: " + timePlaying.ToString("mm':'ss'.'ff");
         }
@@ -52,7 +54,9 @@ public class GameController : MonoBehaviour
     private void BeginGame()
     {
         gamePlaying = true;
-        startTime = Time.time;
+        _startTime = Time.time;
+
+        _zombieSpawner.ToggleSpawner(true);
     }
 
     private void OnToggleControlsPressed()
