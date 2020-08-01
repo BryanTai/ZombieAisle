@@ -35,6 +35,8 @@ public class ZombieSpawner : MonoBehaviour
         }
 
         _pathFinding2d = GameObject.Find("Grid").GetComponent<SimplePathFinding2D>();
+
+        //TODO: Preload some zombies at the start!
     }
 
     private void Update()

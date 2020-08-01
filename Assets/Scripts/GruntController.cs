@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class GruntController : MonoBehaviour
 {
+    //TODO: do something with this!
+    public enum GruntState
+    {
+        Idle,
+        Walking,
+        Attacking
+    }
+
     public int HitPoints = 3;
     public float Speed = 1.0f;
+
+    public Barrier BarrierToAttack;
 
     private SimplePF2D.Path _path;
     private Rigidbody2D _rb;
@@ -29,7 +39,12 @@ public class GruntController : MonoBehaviour
 
     private void Update()
     {
-        if(_path.IsGenerated())
+
+        if(transform.position.y >= GameController.ZOMBIES_AT_BARRIER_Y_POS)
+        {
+            //TODO Start attacking the barrier!!
+        }
+        else if(_path.IsGenerated())
         {
             if(_isStationary)
             {
@@ -56,11 +71,11 @@ public class GruntController : MonoBehaviour
                     _rb.velocity = Vector3.zero;
                     _isStationary = true;
                 }
-
             }
         }
         else
         {
+            //No path!
             _rb.velocity = Vector3.zero;
             _isStationary = true;
         }

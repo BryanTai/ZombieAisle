@@ -6,8 +6,12 @@ public class CameraController : MonoBehaviour
 {
     public Transform playerTransform;
 
+    public const float MAX_Y_VALUE = 10;
+    public const float MIN_Y_VALUE = -12;
+
     private void Update()
     {
-        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, transform.position.z);
+        float newY = Mathf.Clamp(playerTransform.position.y, MIN_Y_VALUE, MAX_Y_VALUE);
+        transform.position = new Vector3(0, newY, transform.position.z);
     }
 }
