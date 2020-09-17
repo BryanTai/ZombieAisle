@@ -25,6 +25,12 @@ public class UIController : MonoBehaviour
         StartCoroutine(ShowAnnouncementForSomeTime(text, secondsToShow));
     }
 
+    public void ShowGameOverText()
+    {
+        AnnouncementText.text = "THE STORE HAS FALLEN";
+        AnnouncementText.gameObject.SetActive(true);
+    }
+
     private IEnumerator ShowAnnouncementForSomeTime(string text, float secondsToShow)
     {
         AnnouncementText.text = text;

@@ -22215,75 +22215,6 @@ Transform:
   m_Father: {fileID: 1436712001}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1281661941
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6682823017685460854, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_Name
-      value: Barrier
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.4865
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7832675936968937284, guid: ae4b4d1e92c944545a5ad5164238ce66,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ae4b4d1e92c944545a5ad5164238ce66, type: 3}
 --- !u!1 &1324520308
 GameObject:
   m_ObjectHideFlags: 0
@@ -25347,12 +25278,6 @@ MonoBehaviour:
   BarrierPrefab: {fileID: 5008206511797312081, guid: ae4b4d1e92c944545a5ad5164238ce66,
     type: 3}
   BarrierParent: {fileID: 2114110587}
-  BarrierXPositions:
-  - -10.5
-  - -5.5
-  - -0.5
-  - 4.5
-  - 9.5
   ControlToggleDebugButton: {fileID: 670683212}
   ControlToggleDebugText: {fileID: 485369593}
   UIController: {fileID: 1324520313}

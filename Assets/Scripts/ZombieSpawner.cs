@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-    public int TotalZombiesToSpawn = 20;
+    private int TotalZombiesToSpawn = 20;
     //public int MaxZombiesOnScreen;
-    public int YSpawn = -20;
-    public int YEnd = 16;
-    public int minXSpawn = -20;
-    public int maxXSpawn = 20;
+    private int YSpawn = -20;
+    private int YEnd = 16; //Barrier spawn
+    private int minXSpawn = -15;
+    private int maxXSpawn = 15;
 
-    public float spawnDelaySeconds = 4.0f;
+    public float spawnDelaySeconds = 2.0f; //4
 
 
     [SerializeField] private GameObject _zombieGruntPrefab;
 
     private bool _enabled = false;
     private float _spawnTimer = 0.0f;
+    private int _totalSpawned = 0;
 
     private SimplePathFinding2D _pathFinding2d;
 
@@ -50,13 +51,16 @@ public class ZombieSpawner : MonoBehaviour
                 int xSpawn = Random.Range(minXSpawn, maxXSpawn);
                 Vector3 startPosition = new Vector3(xSpawn, YSpawn, 0);
                 Vector3 endGoalPosition = new Vector3(xSpawn, YEnd, 0);
+                //Vector3 endGoalPosition = new Vector3(xSpawn, GameController.BARRIER_Y_POS, 0);
 
                 GameObject zombieObject = Instantiate(_zombieGruntPrefab, startPosition, Quaternion.identity);
-                GruntController controller = zombieObject.GetComponent<GruntController>();
+                zombieObject.name = "Grunt " + _totalSpawned.ToString();
+                _totalSpawned++;
+                GruntController grunt = zombieObject.GetComponent<GruntController>();
 
-                if(controller != null)
+                if(grunt != null)
                 {
-                    controller.Initialize(_pathFinding2d, endGoalPosition);
+                    grunt.Initialize(_pathFinding2d, endGoalPosition);
                 }
 
                 _spawnTimer = 0;

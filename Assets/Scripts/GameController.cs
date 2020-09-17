@@ -16,10 +16,10 @@ public class GameController : MonoBehaviour
 
     [Header("Barriers")]
     public Barrier BarrierPrefab;
-    public GameObject BarrierParent;
-    public List<float> BarrierXPositions;
-
-    private List<Barrier> Barriers = new List<Barrier>();
+    public GameObject BarrierParent; //TODO: just using one large Barrier for now
+    //private readonly List<float> _barrierXPositions = new List<float>() { -10.5f, -5.5f, -0.5f, 4.5f, 9.5f }; //This list must be in Ascending order! 
+    //private List<Barrier> _barriers = new List<Barrier>();
+    public Barrier MainBarrier { get; private set; }
 
     [Header("Settings")]
     [SerializeField] private Button ControlToggleDebugButton;
@@ -49,7 +49,8 @@ public class GameController : MonoBehaviour
             Debug.LogError("[GameController] UIController missing!");
         }
 
-        if(BarrierPrefab == null || BarrierXPositions == null)
+        if(BarrierPrefab == null)
+        //if (BarrierPrefab == null || _barrierXPositions == null)
         {
             Debug.LogError("[GameController] Barriers missing!");
         }
@@ -63,12 +64,22 @@ public class GameController : MonoBehaviour
         _zombieSpawner = GetComponent<ZombieSpawner>();
 
         //Set up Barriers
-        foreach(float xPos in BarrierXPositions)
-        {
-            Barrier newBarrier = Instantiate(BarrierPrefab, BarrierParent.transform);
-            newBarrier.transform.position = new Vector3(xPos, BARRIER_Y_POS);
-            Barriers.Add(newBarrier);
-        }
+        //int count = 0;
+        //foreach(float xPos in _barrierXPositions)
+        //{
+        //    Barrier newBarrier = Instantiate(BarrierPrefab, BarrierParent.transform);
+        //    newBarrier.transform.position = new Vector3(xPos, BARRIER_Y_POS);
+        //    newBarrier.gameObject.name = "Barrier " + count.ToString();
+        //    count++;
+        //    _barriers.Add(newBarrier);
+        //    Debug.LogFormat("Created {0} at xPos {1}", newBarrier.gameObject.name, xPos);
+        //}
+
+
+        Barrier newBarrier = Instantiate(BarrierPrefab, BarrierParent.transform);
+        newBarrier.transform.position = new Vector3(0, BARRIER_Y_POS);
+        MainBarrier = newBarrier;
+        Debug.LogFormat("Created {0} at xPos {1}", newBarrier.gameObject.name, newBarrier.transform.position.x);
 
         //Debug Controls
         if (ControlToggleDebugButton != null)
@@ -105,6 +116,16 @@ public class GameController : MonoBehaviour
         _zombieSpawner.ToggleSpawner(true);
     }
 
+    public void TriggerGameOver()
+    {
+        if(gamePlaying == true)
+        {
+            _zombieSpawner.ToggleSpawner(false);
+            UIController.ShowGameOverText();
+            gamePlaying = false;
+        }
+    }
+
     private void OnToggleControlsPressed()
     {
         _player.ToggleControls();
@@ -116,4 +137,20 @@ public class GameController : MonoBehaviour
             ControlToggleDebugText.text = newText;
         }
     }
+
+    //public Barrier GetBarrierFromXPosition(float xPos)
+    //{
+    //    int total = _barrierXPositions.Count;
+    //    for (int i = 0; i < total;  i++)
+    //    {
+    //        float barrierXPosition = _barrierXPositions[i];
+
+    //        if(xPos <= barrierXPosition)
+    //        {
+    //            return _barriers[i];
+    //        }
+    //    }
+    //    Debug.LogFormat("xPos {0} is really far right!", xPos);
+    //    return _barriers[total - 1];
+    //}
 }

@@ -113,7 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoints: 3
-  Speed: 1
+  Speed: 2
+  BarrierToAttack: {fileID: 0}
+  CurrentState: 0
 --- !u!50 &612365905791089275
 Rigidbody2D:
   serializedVersion: 4
