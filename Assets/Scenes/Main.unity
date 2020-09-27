@@ -22327,7 +22327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf6704b44518fc4591f6917f61ab6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnnouncementText: {fileID: 1627174356}
+  _announcementText: {fileID: 1627174356}
 --- !u!1 &1357719834
 GameObject:
   m_ObjectHideFlags: 0
@@ -25275,9 +25275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ab875dcd81f4349823be6e070be8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BarrierPrefab: {fileID: 5008206511797312081, guid: ae4b4d1e92c944545a5ad5164238ce66,
+  _barrierPrefab: {fileID: 5008206511797312081, guid: ae4b4d1e92c944545a5ad5164238ce66,
     type: 3}
-  BarrierParent: {fileID: 2114110587}
+  _barrierParent: {fileID: 2114110587}
   ControlToggleDebugButton: {fileID: 670683212}
   ControlToggleDebugText: {fileID: 485369593}
   UIController: {fileID: 1324520313}
@@ -25306,12 +25306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391bf0e7be273b64d86be57794330205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TotalZombiesToSpawn: 0
-  YSpawn: -20
-  YEnd: 16
-  minXSpawn: -20
-  maxXSpawn: 20
-  spawnDelaySeconds: 4
   _zombieGruntPrefab: {fileID: 8021756711316453250, guid: f5ef4bda1809a0d44b5b9311bb476191,
     type: 3}
 --- !u!1 &1627174355
@@ -25799,18 +25793,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 654805544415607218, guid: af41a85c8ac4bd546a3130fc203339b2,
         type: 3}
-      propertyPath: bulletEffect
+      propertyPath: _bulletEffect
       value: 
       objectReference: {fileID: 547796101}
     - target: {fileID: 1724622462867741081, guid: af41a85c8ac4bd546a3130fc203339b2,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1724622462867741081, guid: af41a85c8ac4bd546a3130fc203339b2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1724622462867741082, guid: af41a85c8ac4bd546a3130fc203339b2,
         type: 3}

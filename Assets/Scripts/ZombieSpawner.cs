@@ -4,67 +4,66 @@ using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-    private int TotalZombiesToSpawn = 20;
-    //public int MaxZombiesOnScreen;
-    private int YSpawn = -20;
-    private int YEnd = 16; //Barrier spawn
-    private int minXSpawn = -15;
-    private int maxXSpawn = 15;
+	[SerializeField] private GameObject _zombieGruntPrefab;
 
-    public float spawnDelaySeconds = 2.0f; //4
+	private int _totalZombiesToSpawn = 20;
+	//public int MaxZombiesOnScreen;
+	private int _ySpawn = -20;
+	private int _yEnd = 16; //Barrier spawn
+	private int _minXSpawn = -15;
+	private int _maxXSpawn = 15;
 
+	private float _spawnDelaySeconds = 2.0f; //4
 
-    [SerializeField] private GameObject _zombieGruntPrefab;
+	private bool _enabled = false;
+	private float _spawnTimer = 0.0f;
+	private int _totalSpawned = 0;
 
-    private bool _enabled = false;
-    private float _spawnTimer = 0.0f;
-    private int _totalSpawned = 0;
+	private SimplePathFinding2D _pathFinding2d; //TODO: Load this reference directly
 
-    private SimplePathFinding2D _pathFinding2d;
+	public void ToggleSpawner(bool enabled)
+	{
+		_enabled = enabled;
+		_spawnTimer = 0.0f;
+	}
 
-    public void ToggleSpawner(bool enabled)
-    {
-        _enabled = enabled;
-        _spawnTimer = 0.0f;
-    }
+	private void Start()
+	{
+		if(_zombieGruntPrefab == null)
+		{
+			Debug.LogError("MISSING ZOMBIE GRUNT PREFAB IN SPAWNER!");
+		}
 
-    private void Start()
-    {
-        if(_zombieGruntPrefab == null)
-        {
-            Debug.LogError("MISSING ZOMBIE GRUNT PREFAB IN SPAWNER!");
-        }
+		_pathFinding2d = GameObject.Find("Grid").GetComponent<SimplePathFinding2D>();
 
-        _pathFinding2d = GameObject.Find("Grid").GetComponent<SimplePathFinding2D>();
+		//TODO: Preload some zombies at the start!
+	}
 
-        //TODO: Preload some zombies at the start!
-    }
+	private void Update()
+	{
+		if(_enabled)
+		{
+			_spawnTimer += Time.deltaTime;
 
-    private void Update()
-    {
-        if(_enabled)
-        {
-            _spawnTimer += Time.deltaTime;
+			if(_spawnTimer >= _spawnDelaySeconds)
+			{
+				int xSpawn = Random.Range(_minXSpawn, _maxXSpawn);
+				Vector3 startPosition = new Vector3(xSpawn, _ySpawn, 0);
+				Vector3 endGoalPosition = new Vector3(xSpawn, _yEnd, 0);
+				//Vector3 endGoalPosition = new Vector3(xSpawn, GameController.BARRIER_Y_POS, 0);
 
-            if(_spawnTimer >= spawnDelaySeconds)
-            {
-                int xSpawn = Random.Range(minXSpawn, maxXSpawn);
-                Vector3 startPosition = new Vector3(xSpawn, YSpawn, 0);
-                Vector3 endGoalPosition = new Vector3(xSpawn, YEnd, 0);
-                //Vector3 endGoalPosition = new Vector3(xSpawn, GameController.BARRIER_Y_POS, 0);
+				GameObject zombieObject = Instantiate(_zombieGruntPrefab, startPosition, Quaternion.identity);
+				zombieObject.name = "Grunt " + _totalSpawned.ToString();
+				_totalSpawned++;
+				GruntController grunt = zombieObject.GetComponent<GruntController>();
 
-                GameObject zombieObject = Instantiate(_zombieGruntPrefab, startPosition, Quaternion.identity);
-                zombieObject.name = "Grunt " + _totalSpawned.ToString();
-                _totalSpawned++;
-                GruntController grunt = zombieObject.GetComponent<GruntController>();
+				if(grunt != null)
+				{
+					grunt.Initialize(_pathFinding2d, endGoalPosition);
+				}
 
-                if(grunt != null)
-                {
-                    grunt.Initialize(_pathFinding2d, endGoalPosition);
-                }
-
-                _spawnTimer = 0;
-            }
-        }
-    }
+				_spawnTimer = 0;
+			}
+		}
+	}
 }

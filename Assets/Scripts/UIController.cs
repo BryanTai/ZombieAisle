@@ -1,43 +1,42 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Text AnnouncementText;
+	[SerializeField] private Text _announcementText;
 
-    private void Awake()
-    {
-        CheckComponents();
-    }
+	private void Awake()
+	{
+		CheckComponents();
+	}
 
-    private void CheckComponents()
-    {
-        if (AnnouncementText == null)
-        {
-            Debug.LogError("[UIController] Cannot find AnnouncementText!");
-        }
-    }
+	private void CheckComponents()
+	{
+		if (_announcementText == null)
+		{
+			Debug.LogError("[UIController] Cannot find AnnouncementText!");
+		}
+	}
 
-    public void ShowAnnouncement(string text, float secondsToShow)
-    {
-        StartCoroutine(ShowAnnouncementForSomeTime(text, secondsToShow));
-    }
+	public void ShowAnnouncement(string text, float secondsToShow)
+	{
+		StartCoroutine(ShowAnnouncementForSomeTime(text, secondsToShow));
+	}
 
-    public void ShowGameOverText()
-    {
-        AnnouncementText.text = "THE STORE HAS FALLEN";
-        AnnouncementText.gameObject.SetActive(true);
-    }
+	public void ShowGameOverText()
+	{
+		_announcementText.text = "THE STORE HAS FALLEN";
+		_announcementText.gameObject.SetActive(true);
+	}
 
-    private IEnumerator ShowAnnouncementForSomeTime(string text, float secondsToShow)
-    {
-        AnnouncementText.text = text;
-        AnnouncementText.gameObject.SetActive(true);
+	private IEnumerator ShowAnnouncementForSomeTime(string text, float secondsToShow)
+	{
+		_announcementText.text = text;
+		_announcementText.gameObject.SetActive(true);
 
-        yield return new  WaitForSeconds(secondsToShow);
+		yield return new  WaitForSeconds(secondsToShow);
 
-        AnnouncementText.gameObject.SetActive(false);
-    }
+		_announcementText.gameObject.SetActive(false);
+	}
 }
