@@ -12,6 +12,7 @@ public class WeaponController : MonoBehaviour
 	private float _timeBetweenShots = 0.5f;
 	private float _reloadTime = 2.0f;
 	private int _weaponDamage = 1;
+	private int _framesForFlash = 10;
 
 	private int _currentAmmo;
 	private bool _canShoot;
@@ -28,6 +29,7 @@ public class WeaponController : MonoBehaviour
 	{
 		_bulletEffect.enabled = false;
 		_canShoot = true;
+		_muzzleFlashEffect.gameObject.SetActive(false);
 	}
 
 	private IEnumerator ShotCooldown()
@@ -36,17 +38,31 @@ public class WeaponController : MonoBehaviour
 		_canShoot = true;
 	}
 
+	private IEnumerator ShowMuzzleFlash()
+	{
+		_muzzleFlashEffect.gameObject.SetActive(true);
+		int framesFlashed = 0;
+
+		while(framesFlashed < _framesForFlash)
+		{
+			framesFlashed++;
+			yield return null;
+		}
+
+		_muzzleFlashEffect.gameObject.SetActive(false);
+	}
+
 	private IEnumerator Shoot()
 	{
 		_canShoot = false;
 
 		StartCoroutine(ShotCooldown());
+		StartCoroutine(ShowMuzzleFlash());
 
 		RaycastHit2D hitInfo = Physics2D.Raycast(_firingPoint.position, _firingPoint.up);
 
-		if(hitInfo != null)
+		if(hitInfo != null) //TODO: Always true??
 		{
-			//TODO: Register enemy hit here
 			_bulletEffect.SetPosition(0, _firingPoint.position);
 			_bulletEffect.SetPosition(1, hitInfo.point);
 
@@ -74,7 +90,7 @@ public class WeaponController : MonoBehaviour
 		_canShoot = true;
 	}
 
-	private void Reload()
+	private void Reload() //TODO: Implement ammo!
 	{
 		_canShoot = false;
 		StartCoroutine(ReloadCooldown());
