@@ -132,7 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponController: {fileID: 654805544415607218}
-  _moveSpeed: 5
   useMouseAndKeyboard: 1
 --- !u!114 &654805544415607218
 MonoBehaviour:

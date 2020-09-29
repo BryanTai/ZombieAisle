@@ -65,6 +65,9 @@ TagManager:
   - name: Bullets
     uniqueID: 365054521
     locked: 0
+  - name: Effects
+    uniqueID: 333663889
+    locked: 0
   - name: Player
     uniqueID: 3258446329
     locked: 0

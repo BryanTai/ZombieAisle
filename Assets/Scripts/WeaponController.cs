@@ -8,11 +8,11 @@ public class WeaponController : MonoBehaviour
 	[SerializeField] private SpriteRenderer _muzzleFlashEffect; //TODO: Implement!
 	[SerializeField] private LineRenderer _bulletEffect;
 
-	private float _bulletEffectTime = 0.2f;
+	private float _bulletEffectTime = 0.05f; //TODO: Frames or seconds??
 	private float _timeBetweenShots = 0.5f;
 	private float _reloadTime = 2.0f;
 	private int _weaponDamage = 1;
-	private int _framesForFlash = 10;
+	private int _framesForFlash = 5;
 
 	private int _currentAmmo;
 	private bool _canShoot;
@@ -80,7 +80,14 @@ public class WeaponController : MonoBehaviour
 		}
 
 		_bulletEffect.enabled = true;
-		yield return new WaitForSeconds(_bulletEffectTime);
+
+		int framesFlashed = 0;
+		while(framesFlashed < _framesForFlash)
+		{
+			framesFlashed++;
+			yield return null;
+		}
+
 		_bulletEffect.enabled = false;
 	}
 

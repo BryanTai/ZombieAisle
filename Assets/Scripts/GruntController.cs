@@ -13,27 +13,34 @@ public class GruntController : MonoBehaviour
 		AttackingBase
 	}
 
+	public GruntState CurrentState;
+
+	[Header("Tweakable Values")]
 	public int HitPoints = 3;
 	public float Speed = 1.0f;
 	public float AttackDelay = 1.0f;
 	public int AttackStrength = 2; //TODO: split this into Player and Barrier, for specialist enemies
 
+	[HideInInspector]
 	public Barrier BarrierToAttack;
 
-	public GruntState CurrentState;
+	[Header("References")]
+	[SerializeField] private ParticleSystem _deathBloodSplash;
+	[SerializeField] private Rigidbody2D _rigidBody;
+	[SerializeField] private Collider2D _collider;
 
 	private SimplePF2D.Path _path;
-	private Rigidbody2D _rb;
 	private Vector3 _nextPoint;
 	private bool _isStationary;
 	private Vector3 _endGoalPosition;
 	private SimplePathFinding2D _pathFinding2D;
 
 	private bool _gameIsOver;
+	private bool _isDead;
+	private float _deathAnimationRuntime = 0.5f;
 
 	private void Start()
 	{
-		_rb = GetComponent<Rigidbody2D>();
 		_nextPoint = Vector3.zero;
 	}
 
@@ -66,7 +73,7 @@ public class GruntController : MonoBehaviour
 
 	private void Update()
 	{
-		if(_gameIsOver)
+		if(_gameIsOver || _isDead)
 		{
 			return;
 		}
@@ -108,9 +115,9 @@ public class GruntController : MonoBehaviour
 				if(_path.GetNextPoint(ref _nextPoint))
 				{
 					//Get the next point in the path as a world position
-					_rb.velocity = _nextPoint - transform.position;
-					_rb.velocity = _rb.velocity.normalized;
-					_rb.velocity *= Speed;
+					_rigidBody.velocity = _nextPoint - transform.position;
+					_rigidBody.velocity = _rigidBody.velocity.normalized;
+					_rigidBody.velocity *= Speed;
 					_isStationary = false;
 				}
 				else
@@ -139,7 +146,7 @@ public class GruntController : MonoBehaviour
 
 	private void StopMoving()
 	{
-		_rb.velocity = Vector3.zero;
+		_rigidBody.velocity = Vector3.zero;
 		_isStationary = true;
 	}
 
@@ -181,6 +188,19 @@ public class GruntController : MonoBehaviour
 
 	private void OnDeath()
 	{
+		StopMoving();
+		_isDead = true;
+		_collider.enabled = false;
+
+		StartCoroutine(PlayDeathAnimation());
+	}
+
+	private IEnumerator PlayDeathAnimation()
+	{
+		_deathBloodSplash.gameObject.SetActive(true);
+		_deathBloodSplash.Play();
+
+		yield return new WaitForSeconds(_deathAnimationRuntime);
 		Destroy(this.gameObject);
 	}
 }
