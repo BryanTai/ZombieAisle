@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
 	[SerializeField] private Text _announcementText;
+	[SerializeField] private Text _ammoCount;
 
 	private void Awake()
 	{
@@ -28,6 +29,11 @@ public class UIController : MonoBehaviour
 	{
 		_announcementText.text = "THE STORE HAS FALLEN";
 		_announcementText.gameObject.SetActive(true);
+	}
+
+	public void SetAmmoCountText(string countText)
+	{
+		_ammoCount.text = countText;
 	}
 
 	private IEnumerator ShowAnnouncementForSomeTime(string text, float secondsToShow)

@@ -22206,6 +22206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _announcementText: {fileID: 1627174356}
+  _ammoCount: {fileID: 90563327}
 --- !u!1 &1357719834
 GameObject:
   m_ObjectHideFlags: 0

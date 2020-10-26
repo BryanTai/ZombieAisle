@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	private void Start()
 	{
 		_playerRB = GetComponent<Rigidbody2D>();
+		_weaponController.InitializeWeapon();
 	}
 
 	private void Update()
