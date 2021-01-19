@@ -15,6 +15,11 @@ public class PlayerController : MonoBehaviour
 	private Vector2 _movementVector;
 	private Vector2 _rightJoystickInput;
 	private Vector2 _mouseDirection;
+
+	public void SetPosition(Vector3 newPosition)
+	{
+		this.gameObject.transform.position = newPosition;
+	}
 	
 	private void Start()
 	{

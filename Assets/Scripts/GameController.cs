@@ -6,11 +6,18 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+
 	public static GameController instance;
 
 	public const float ZOMBIES_AT_BARRIER_Y_POS = 12.5f; // Zombies stop here to hit barriers
 	public const float BARRIER_Y_POS = 13f; //Spawn Barriers here
 	public const float GAMEOVER_Y_POSITION = 15f; // If a zombie reaches this point, game over
+	public const string PLAYER_TAG = "Player";
+	public const string SURVIVOR_TAG = "Survivor";
+	public const string POINTOFINTEREST_TAG = "PointOfInterest";
+	//TODO: Save button names too!
+
+	public readonly Vector3 BEHIND_BARRIER_START_POSITION = new Vector3(0, 20, 0);
 
 	public bool gamePlaying { get; private set; }
 
@@ -20,6 +27,7 @@ public class GameController : MonoBehaviour
 	//private readonly List<float> _barrierXPositions = new List<float>() { -10.5f, -5.5f, -0.5f, 4.5f, 9.5f }; //This list must be in Ascending order! 
 	//private List<Barrier> _barriers = new List<Barrier>();
 	public Barrier MainBarrier { get; private set; }
+	public PlayerController Player { get; private set; }
 
 	[Header("Settings")]
 	[SerializeField] private Button ControlToggleDebugButton;
@@ -27,13 +35,16 @@ public class GameController : MonoBehaviour
 
 	[Header("Controllers")]
 	public UIController UIController;
+	public CameraController CameraController;
 
 	private float _startTime, _elapsedTime;
 
-	private PlayerController _player;
 	private ZombieSpawner _zombieSpawner;
 
 	private TimeSpan _timePlaying;
+
+	private CinematicState _currentCinematicState;
+
 
 	private void Awake()
 	{
@@ -49,6 +60,11 @@ public class GameController : MonoBehaviour
 			Debug.LogError("[GameController] UIController missing!");
 		}
 
+		if(CameraController == null)
+		{
+			Debug.LogError("[GameController] CameraController missing!");
+		}
+
 		if(_barrierPrefab == null)
 		//if (BarrierPrefab == null || _barrierXPositions == null)
 		{
@@ -60,7 +76,7 @@ public class GameController : MonoBehaviour
 	{
 		gamePlaying = false;
 		//TODO: Spawn in a new player instead of using the scene player!
-		_player = FindObjectOfType<PlayerController>();
+		Player = FindObjectOfType<PlayerController>();
 		_zombieSpawner = GetComponent<ZombieSpawner>();
 
 		//Set up Barriers
@@ -74,6 +90,7 @@ public class GameController : MonoBehaviour
 		//    _barriers.Add(newBarrier);
 		//    Debug.LogFormat("Created {0} at xPos {1}", newBarrier.gameObject.name, xPos);
 		//}
+		_currentCinematicState = CinematicState.NONE;
 
 
 		Barrier newBarrier = Instantiate(_barrierPrefab, _barrierParent.transform);
@@ -87,7 +104,10 @@ public class GameController : MonoBehaviour
 			ControlToggleDebugButton.onClick.AddListener(OnToggleControlsPressed);
 		}
 
-		StartCoroutine(DelayedStart(3.0f));
+		Player.SetPosition(BEHIND_BARRIER_START_POSITION);
+
+//TODO: Trigger the start through an Interaction!
+		//StartCoroutine(DelayedStart(3.0f));
 	}
 
 	private IEnumerator DelayedStart(float delaySeconds)
@@ -128,12 +148,12 @@ public class GameController : MonoBehaviour
 
 	private void OnToggleControlsPressed()
 	{
-		_player.ToggleControls();
+		Player.ToggleControls();
 
 		if (ControlToggleDebugText != null)
 		{
 			string newText = "Toggle ";
-			newText += _player.useMouseAndKeyboard ? "Mouse & Key" : "Controller";
+			newText += Player.useMouseAndKeyboard ? "Mouse & Key" : "Controller";
 			ControlToggleDebugText.text = newText;
 		}
 	}
