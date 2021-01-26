@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Barrier : MonoBehaviour
 {
-	public int HitPoints;
-
 	[SerializeField] private SpriteRenderer _barrierSprite;
 	[SerializeField] private float _damageFlashSeconds = 0.2f;
 
 	private Coroutine _currentDamageAnimation;
+
+	private int _hitPoints;
 
 	public void Awake()
 	{
@@ -17,13 +17,15 @@ public class Barrier : MonoBehaviour
 		{
 			Debug.LogError("[Barrier] Cannot find sprite!");
 		}
+
+		_hitPoints = 10;
 	}
 
 	public void OnHit(int damage)
 	{
-		HitPoints -= damage;
+		_hitPoints -= damage;
 
-		if (HitPoints <= 0)
+		if (_hitPoints <= 0)
 		{
 			//Barrier is destroyed!
 			_barrierSprite.enabled = false;
@@ -36,6 +38,11 @@ public class Barrier : MonoBehaviour
 			StopCoroutine(_currentDamageAnimation);
 		}
 		_currentDamageAnimation = StartCoroutine(ShowDamageAnimation());
+	}
+
+	public bool IsBarrierUp()
+	{
+		return _hitPoints > 0;
 	}
 
 	private IEnumerator ShowDamageAnimation()

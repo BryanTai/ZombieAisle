@@ -10,14 +10,15 @@ public class GruntController : MonoBehaviour
 		Idle,
 		Walking,
 		AttackingBarrier,
-		AttackingBase
+		AttackingBase //Barrier is down, zombies in the base. Last stand for the player
 	}
 
 	public GruntState CurrentState;
 
 	[Header("Tweakable Values")]
 	public int HitPoints = 3;
-	public float Speed = 1.0f;
+	public float DefaultWalkSpeed = 1.0f;
+	public float InsideBaseWalkSpeed = 0.75f;
 	public float AttackDelay = 1.0f;
 	public int AttackStrength = 2; //TODO: split this into Player and Barrier, for specialist enemies
 
@@ -29,11 +30,15 @@ public class GruntController : MonoBehaviour
 	[SerializeField] private Rigidbody2D _rigidBody;
 	[SerializeField] private Collider2D _collider;
 
+	private GameController _gameController;
+
+	private Vector3 _defaultAttackDirection = Vector3.left;
+
 	private SimplePF2D.Path _path;
 	private Vector3 _nextPoint;
 	private bool _isStationary;
 	private Vector3 _endGoalPosition;
-	private SimplePathFinding2D _pathFinding2D;
+	private SimplePathFinding2D _pathFinding2D; //TODO: Simplify pathfinding, just move left
 
 	private bool _gameIsOver;
 	private bool _isDead;
@@ -44,26 +49,10 @@ public class GruntController : MonoBehaviour
 		_nextPoint = Vector3.zero;
 	}
 
-	public void Initialize(SimplePathFinding2D pathFinding2D, Vector3 endGoalPosition)
+	public void Initialize(GameController gameController)
 	{
-		//TODO: Set a target barrier!
-		_pathFinding2D = pathFinding2D;
-		_path = new SimplePF2D.Path(_pathFinding2D);
-		_endGoalPosition = endGoalPosition;
-
-		CreateNewPathToEndGoal();
-
-		BarrierToAttack = GameController.instance.MainBarrier;
-
-		Debug.LogFormat("[GruntController] - New grunt {0}: startPosition {1} endPosition {2} going for {3}",
-			gameObject.name, transform.position, endGoalPosition, BarrierToAttack.gameObject.name);
-
+		_gameController = gameController;
 		CurrentState = GruntState.Walking;
-	}
-
-	private void CreateNewPathToEndGoal()
-	{
-		_path.CreatePath(transform.position, _endGoalPosition);
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
@@ -75,6 +64,7 @@ public class GruntController : MonoBehaviour
 	{
 		if(_gameIsOver || _isDead)
 		{
+			SetToIdleState();
 			return;
 		}
 
@@ -83,7 +73,7 @@ public class GruntController : MonoBehaviour
 			//TODO: Keep attacking the barrier!
 			StopMoving();
 		}
-		else if(transform.position.y >= GameController.GAMEOVER_Y_POSITION)
+		else if(transform.position.x <= GameController.GAMEOVER_X_POSITION)
 		{
 			//TODO: Zombies win!!
 			SetToIdleState();
@@ -91,55 +81,36 @@ public class GruntController : MonoBehaviour
 			_gameIsOver = true;
 		}
 
-		else if(BarrierToAttack != null && BarrierToAttack.HitPoints > 0 
-			&& transform.position.y >= GameController.ZOMBIES_AT_BARRIER_Y_POS)
+		else if(_gameController.IsBarrierUp() 
+			&& transform.position.x <= GameController.ZOMBIES_AT_BARRIER_X_POS)
 		{
 			//Start attacking the barrier!!
 			CurrentState = GruntState.AttackingBarrier;
 			StopMoving();
 			StartCoroutine(StartAttackingBarrier());
-			Debug.LogFormat("[Grunt] - {0} is now Attacking {1}! ", gameObject.name, BarrierToAttack.gameObject.name);
+			Debug.LogFormat("[Grunt] - {0} is now Attacking BARRIER! ", gameObject.name);
 		}
 
-		else if(CurrentState != GruntState.AttackingBase && transform.position.y >= GameController.ZOMBIES_AT_BARRIER_Y_POS)
+		else if(!_gameController.IsBarrierUp() && CurrentState != GruntState.AttackingBase && transform.position.x <= GameController.ZOMBIES_AT_BARRIER_X_POS)
 		{
 			//Start attacking the base!!
+			Debug.LogFormat("[Grunt] - {0} is now Attacking BASE! ", gameObject.name);
 			CurrentState = GruntState.AttackingBase;
-			CreateNewPathToEndGoal();
 		}
 
-		else if(_path.IsGenerated())
+		else if(CurrentState == GruntState.AttackingBase)
 		{
-			if(_isStationary)
-			{
-				if(_path.GetNextPoint(ref _nextPoint))
-				{
-					//Get the next point in the path as a world position
-					_rigidBody.velocity = _nextPoint - transform.position;
-					_rigidBody.velocity = _rigidBody.velocity.normalized;
-					_rigidBody.velocity *= Speed;
-					_isStationary = false;
-				}
-				else
-				{
-					//End of the path!
-					Debug.Log("[Grunt] - End of path! " + gameObject.name);
-					SetToIdleState();
-				}
-			}
-			else
-			{
-				Vector3 delta = _nextPoint - transform.position;
-				if(delta.magnitude <= 0.2f)
-				{
-					StopMoving();
-				}
-			}
+			_rigidBody.velocity = _defaultAttackDirection * InsideBaseWalkSpeed;
+			//TODO: Attack the PLAYER!
 		}
+
+		else if(CurrentState == GruntState.Walking)
+		{
+			_rigidBody.velocity = _defaultAttackDirection * DefaultWalkSpeed;
+		}
+
 		else
 		{
-			//No path! TODO: why are some grunts just not moving??
-			//Debug.Log("[Grunt] - No path! " + gameObject.name);
 			SetToIdleState();
 		}
 	}
@@ -158,13 +129,14 @@ public class GruntController : MonoBehaviour
 
 	public void TakeDamage(int damage)
 	{
-		//TODO: show some animation, maybe a colour flash
 		HitPoints -= damage;
 
 		if(HitPoints <= 0)
 		{
 			OnDeath();
 		}
+
+		StartCoroutine(PlayDamagedAnimation());
 	}
 
 	private IEnumerator StartAttackingBarrier()
@@ -175,11 +147,12 @@ public class GruntController : MonoBehaviour
 	//        return null;
 	//    }
 
-		//This should break out when the Grunt switches states. TODO: Test this with a single grunt!!
-		while(CurrentState == GruntState.AttackingBarrier && BarrierToAttack.HitPoints > 0)
+		//This should break out when the Grunt switches states.
+		while(CurrentState == GruntState.AttackingBarrier && _gameController.IsBarrierUp())
 		{
 			yield return new WaitForSeconds(AttackDelay);
-			BarrierToAttack.OnHit(AttackStrength);
+			//TODO: This needs to be LOCKED to prevent multiple zombies calling on the same frame
+			_gameController.HitBarrier(AttackStrength);
 		}
 
 		//Barrier is destroyed!
@@ -195,12 +168,18 @@ public class GruntController : MonoBehaviour
 		StartCoroutine(PlayDeathAnimation());
 	}
 
+	private IEnumerator PlayDamagedAnimation()
+	{
+		//TODO: create a Hit by bullet animation! Perhaps a colour flash
+		return null;
+	}
+
 	private IEnumerator PlayDeathAnimation()
 	{
 		_deathBloodSplash.gameObject.SetActive(true);
 		_deathBloodSplash.Play();
 
 		yield return new WaitForSeconds(_deathAnimationRuntime);
-		Destroy(this.gameObject);
+		Destroy(this.gameObject); //TODO: make sure nothing's referencing this...
 	}
 }

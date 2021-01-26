@@ -115,7 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   HitPoints: 3
-  Speed: 2
+  DefaultWalkSpeed: 2
+  InsideBaseWalkSpeed: 1
   AttackDelay: 1
   AttackStrength: 2
   BarrierToAttack: {fileID: 0}

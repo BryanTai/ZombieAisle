@@ -9,9 +9,9 @@ public class GameController : MonoBehaviour
 
 	public static GameController instance;
 
-	public const float ZOMBIES_AT_BARRIER_Y_POS = 12.5f; // Zombies stop here to hit barriers
-	public const float BARRIER_Y_POS = 13f; //Spawn Barriers here
-	public const float GAMEOVER_Y_POSITION = 15f; // If a zombie reaches this point, game over
+	public const float ZOMBIES_AT_BARRIER_X_POS = 4.25f; // Zombies stop here to hit barriers
+	public const float BARRIER_X_POS = 4f; //Spawn Barriers here
+	public const float GAMEOVER_X_POSITION = 0f; // If a zombie reaches this point, game over
 	public const string PLAYER_TAG = "Player";
 	public const string SURVIVOR_TAG = "Survivor";
 	public const string POINTOFINTEREST_TAG = "PointOfInterest";
@@ -94,7 +94,7 @@ public class GameController : MonoBehaviour
 
 
 		Barrier newBarrier = Instantiate(_barrierPrefab, _barrierParent.transform);
-		newBarrier.transform.position = new Vector3(0, BARRIER_Y_POS);
+		newBarrier.transform.position = new Vector3(BARRIER_X_POS, 0);
 		MainBarrier = newBarrier;
 		Debug.LogFormat("Created {0} at xPos {1}", newBarrier.gameObject.name, newBarrier.transform.position.x);
 
@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour
 		Player.SetPosition(BEHIND_BARRIER_START_POSITION);
 
 //TODO: Trigger the start through an Interaction!
-		//StartCoroutine(DelayedStart(3.0f));
+		StartCoroutine(DelayedStart(3.0f));
 	}
 
 	private IEnumerator DelayedStart(float delaySeconds)
@@ -158,6 +158,20 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+#region BARRIER
+	public bool IsBarrierUp()
+	{
+		return MainBarrier.IsBarrierUp();
+	}
+
+	public void HitBarrier(int damage)
+	{
+		if (IsBarrierUp())
+		{
+			MainBarrier.OnHit(damage);
+		}
+	}
+
 	//public Barrier GetBarrierFromXPosition(float xPos)
 	//{
 	//    int total = _barrierXPositions.Count;
@@ -173,4 +187,5 @@ public class GameController : MonoBehaviour
 	//    Debug.LogFormat("xPos {0} is really far right!", xPos);
 	//    return _barriers[total - 1];
 	//}
+	#endregion
 }
