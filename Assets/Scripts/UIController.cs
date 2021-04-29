@@ -59,9 +59,10 @@ public class UIController : MonoBehaviour
 #endregion
 
 #region Combat HUD
-	public void SetAmmoCountText(string countText)
+	public void SetAmmoCountText(string countText, Color textColor)
 	{
 		_ammoCount.text = countText;
+		_ammoCount.color = textColor;
 	}
 #endregion
 

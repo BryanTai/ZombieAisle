@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
 	public const string POINTOFINTEREST_TAG = "PointOfInterest";
 	//TODO: Save button names too!
 
-	public readonly Vector3 BEHIND_BARRIER_START_POSITION = new Vector3(0, 20, 0);
+	public readonly Vector3 BEHIND_BARRIER_START_POSITION = new Vector3(0, 0, 0); //y = 20 for Dialogue testing
 
 	public bool gamePlaying { get; private set; }
 
@@ -136,6 +136,7 @@ public class GameController : MonoBehaviour
 		_zombieSpawner.ToggleSpawner(true);
 	}
 
+	//Player has lost the game
 	public void TriggerGameOver()
 	{
 		if(gamePlaying == true)
@@ -144,6 +145,12 @@ public class GameController : MonoBehaviour
 			UIController.ShowGameOverText();
 			gamePlaying = false;
 		}
+	}
+
+	//Player has successfully defeated all the zombies for a night
+	public void TriggerRoundOver()
+	{
+		//TODO: Implement!
 	}
 
 	private void OnToggleControlsPressed()

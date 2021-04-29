@@ -43,6 +43,7 @@ public class PlayerInteractionController : MonoBehaviour
 		if(survivor != null)
 		{
 			//TODO: Show TALK UI over GameObject
+			
 			_uiController.SetInteractText(survivor.InteractText);
 			_uiController.SetInteractTextActive(true);
 		}

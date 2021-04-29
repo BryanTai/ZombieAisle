@@ -10,7 +10,7 @@ public class ZombieSpawner : MonoBehaviour
 
 	private GameController _gameController;
 
-	private int _totalZombiesToSpawn = 20;
+	private int _totalZombiesToSpawn = 20; //TODO: How to keep track of zombies killed? Gamecontroller?
 	//public int MaxZombiesOnScreen;
 	//OLD
 	// private int _ySpawn = -20;
@@ -18,7 +18,7 @@ public class ZombieSpawner : MonoBehaviour
 	// private int _minXSpawn = -15;
 	// private int _maxXSpawn = 15;
 
-	private float _xSpawn = 15.0f;//40.0f;
+	private float _xSpawn = 40.0f;
 	private float[][] _ySpawnRanges = new float[][]
 	{
 		new float[] {13.4f, 10.6f}, //TODO: Store these values per Aisle or something
@@ -28,7 +28,7 @@ public class ZombieSpawner : MonoBehaviour
 		new float[] {-10.6f, -13.4f},
 	} ;
 
-	private float _spawnDelaySeconds = 2.0f; //4
+	private float _spawnDelaySeconds = 5.0f; //4
 
 	private bool _enabled = false;
 	private float _spawnTimer = 0.0f;
@@ -58,7 +58,7 @@ public class ZombieSpawner : MonoBehaviour
 
 	private void Update()
 	{
-		if(_enabled)
+		if(_enabled && _totalSpawned < _totalZombiesToSpawn)
 		{
 			_spawnTimer += Time.deltaTime;
 

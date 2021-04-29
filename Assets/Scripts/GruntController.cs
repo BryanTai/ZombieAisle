@@ -75,7 +75,7 @@ public class GruntController : MonoBehaviour
 		}
 		else if(transform.position.x <= GameController.GAMEOVER_X_POSITION)
 		{
-			//TODO: Zombies win!!
+			// Zombies win!!
 			SetToIdleState();
 			GameController.instance.TriggerGameOver();
 			_gameIsOver = true;
@@ -171,7 +171,7 @@ public class GruntController : MonoBehaviour
 	private IEnumerator PlayDamagedAnimation()
 	{
 		//TODO: create a Hit by bullet animation! Perhaps a colour flash
-		return null;
+		yield return new WaitForSeconds(0.01f);
 	}
 
 	private IEnumerator PlayDeathAnimation()
