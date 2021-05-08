@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 	[SerializeField] private Text ControlToggleDebugText;
 
 	[Header("Controllers")]
-	public UIController UIController;
+	public GameplayUIController UIController;
 	public CameraController CameraController;
 
 	private float _startTime, _elapsedTime;

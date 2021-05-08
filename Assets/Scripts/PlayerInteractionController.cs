@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInteractionController : MonoBehaviour
 {
 	private Interactable _currentInteractableObject = null;
-	private UIController _uiController;
+	private GameplayUIController _uiController;
 
 	private void Start()
 	{

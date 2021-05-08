@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class GameplayUIController : MonoBehaviour
 {
 	[SerializeField] private Text _announcementText;
 	[SerializeField] private Text _ammoCount;
@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
 	{
 		if (_announcementText == null)
 		{
-			Debug.LogError("[UIController] Cannot find AnnouncementText!");
+			Debug.LogError("[GameplayUIController] Cannot find AnnouncementText!");
 		}
 	}
 #endregion
