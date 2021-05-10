@@ -4,9 +4,14 @@ public class GameStateController : MonoBehaviour
 {
 	public static GameStateController instance;
 
+	[Header("UI Controllers")]
 	[SerializeField] private IntroScreenController _introContainer;
 	[SerializeField] private RestScreenController _restContainer;
+	[SerializeField] private MapScreenController _mapContainer;
 	[SerializeField] private GameObject _gameplayUIContainer;
+
+	[Header("Gameplay")]
+	[SerializeField] private GameplayController _gameplayController;
 
 	private void Awake()
 	{
@@ -18,8 +23,18 @@ public class GameStateController : MonoBehaviour
 		ChangeGameState(GameState.INTRO);
 	}
 
+	private void EnableGameScreen(GameState newState)
+	{
+		_introContainer.gameObject.SetActive(newState == GameState.INTRO);
+		_restContainer.gameObject.SetActive(newState == GameState.INTRO || newState == GameState.REST || newState == GameState.MAP);
+		_mapContainer.gameObject.SetActive(newState == GameState.MAP);
+		_gameplayUIContainer.SetActive(newState == GameState.GAMEPLAY);
+	}
+
 	public void ChangeGameState(GameState newState)
 	{
+		EnableGameScreen(newState);
+
 		//TODO: Implement each case!
 		switch(newState)
 		{
@@ -30,17 +45,13 @@ public class GameStateController : MonoBehaviour
 				// Start button leads to REST
 				// OPTIONS button
 
-				_introContainer.gameObject.SetActive(true);
-				_restContainer.gameObject.SetActive(true);
-				_gameplayUIContainer.SetActive(false);
+				_restContainer.ToggleButtons(false);
 			break;
 			case GameState.GAMEPLAY:
 				// FROM: REST
 				// Ends in VICTORY or DEFEAT
 
-				_introContainer.gameObject.SetActive(false);
-				_restContainer.gameObject.SetActive(false);
-				_gameplayUIContainer.SetActive(true);
+				_gameplayController.Initialize();
 			break;
 			case GameState.VICTORY:
 				// FROM: GAMEPLAY
@@ -62,15 +73,15 @@ public class GameStateController : MonoBehaviour
 				// WEAPONS button
 				// GAMEPLAY start button
 
-				_introContainer.gameObject.SetActive(false);
-				_restContainer.gameObject.SetActive(true);
-				_gameplayUIContainer.SetActive(false);
+				_restContainer.ToggleButtons(true);
 			break;
 			case GameState.MAP:
 				// FROM: REST
 				// Show the MAP screen
 				// Drag and drop different survivors to defensive positions
 				// Returns to REST
+
+				_restContainer.ToggleButtons(false);
 			break;
 			case GameState.WEAPONS:
 				// FROM: REST

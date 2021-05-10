@@ -121,12 +121,12 @@ public class WeaponController : MonoBehaviour
 
 	private void UpdateAmmoText()
 	{
-		GameController.instance.UIController.SetAmmoCountText($"Ammo: {_currentAmmo.ToString()}", _defaultAmmoColor);
+		GameplayController.instance.UIController.SetAmmoCountText($"Ammo: {_currentAmmo.ToString()}", _defaultAmmoColor);
 	}
 
 	private void ShowReloadingText()
 	{
-		GameController.instance.UIController.SetAmmoCountText("RELOADING", _reloadingColor);
+		GameplayController.instance.UIController.SetAmmoCountText("RELOADING", _reloadingColor);
 	}
 
 	private void Reload()

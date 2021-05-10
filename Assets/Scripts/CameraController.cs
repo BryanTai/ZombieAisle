@@ -21,11 +21,12 @@ public class CameraController : MonoBehaviour
 		SetCameraToGameplay();
 	}
 
-	private void Update()
-	{
-		float newY = Mathf.Clamp(playerTransform.position.y, MIN_Y_VALUE, MAX_Y_VALUE);
-		transform.position = new Vector3(FIXED_X_VALUE, newY, transform.position.z);
-	}
+//TODO: Disabling to try a Locked Camera
+	// private void Update()
+	// {
+	// 	float newY = Mathf.Clamp(playerTransform.position.y, MIN_Y_VALUE, MAX_Y_VALUE);
+	// 	transform.position = new Vector3(FIXED_X_VALUE, newY, transform.position.z);
+	// }
 
 	public void SetCameraToDialogue()
 	{

@@ -11,7 +11,7 @@ public class InteractionUIController : MonoBehaviour
 
 	private void Start()
 	{
-		_player = GameController.instance.Player;
+		_player = GameplayController.instance.Player;
 		SetSpriteActive(false);
 	}
 

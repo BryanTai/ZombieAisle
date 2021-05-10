@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+	private const float DEFEND_STORE_X_POSITION = 0.5f;
+	private const float MAX_Y_DISTANCE = 8.5f;
+
 	[SerializeField] private WeaponController _weaponController;
 	private float _moveSpeed = 5.0f;
 
@@ -35,40 +38,19 @@ public class PlayerController : MonoBehaviour
 	private void FixedUpdate()
 	{
 		Vector2 currentMovement = _movementVector * _moveSpeed * Time.deltaTime; 
-		_playerRB.MovePosition(_playerRB.position + currentMovement);
+		Vector2 newPosition = _playerRB.position + currentMovement;
 
-		if (useMouseAndKeyboard)
+		if(Mathf.Abs(newPosition.y) > MAX_Y_DISTANCE)
 		{
-			float mouseAngle = Mathf.Atan2(_mouseDirection.y, _mouseDirection.x) * Mathf.Rad2Deg - 90;
-			Quaternion playerRotation = Quaternion.AngleAxis(mouseAngle, Vector3.forward);
-			_playerRB.SetRotation(playerRotation);
+			newPosition = Vector2.ClampMagnitude(newPosition, MAX_Y_DISTANCE);
 		}
-		else
-		{
-			if (_rightJoystickInput.magnitude > 0f)
-			{
-				Vector3 currentRotation = Vector3.left * _rightJoystickInput.x + Vector3.up * _rightJoystickInput.y;
-				Quaternion playerRotation = Quaternion.LookRotation(currentRotation, Vector3.forward);
-				_playerRB.SetRotation(playerRotation);
-			}
-		}
-		
+
+		_playerRB.MovePosition(newPosition);
 	}
 
 	private void GetPlayerInput()
 	{
-		_movementVector = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-		if(useMouseAndKeyboard)
-		{
-			_mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-		}
-		else
-		{
-			//Player aiming
-			_rightJoystickInput = new Vector2(Input.GetAxis("R_Horizontal"), Input.GetAxis("R_Vertical"));
-
-		}
+		_movementVector = new Vector2(0, Input.GetAxis("Vertical"));
 
 		//if(Input.GetButtonDown("Shoot")) //only true once
 		if (Input.GetButton("Shoot")) //true as long as button is held

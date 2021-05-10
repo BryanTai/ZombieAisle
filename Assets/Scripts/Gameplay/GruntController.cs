@@ -30,7 +30,7 @@ public class GruntController : MonoBehaviour
 	[SerializeField] private Rigidbody2D _rigidBody;
 	[SerializeField] private Collider2D _collider;
 
-	private GameController _gameController;
+	private GameplayController _gameController;
 
 	private Vector3 _defaultAttackDirection = Vector3.left;
 
@@ -49,7 +49,7 @@ public class GruntController : MonoBehaviour
 		_nextPoint = Vector3.zero;
 	}
 
-	public void Initialize(GameController gameController)
+	public void Initialize(GameplayController gameController)
 	{
 		_gameController = gameController;
 		CurrentState = GruntState.Walking;
@@ -73,16 +73,16 @@ public class GruntController : MonoBehaviour
 			//TODO: Keep attacking the barrier!
 			StopMoving();
 		}
-		else if(transform.position.x <= GameController.GAMEOVER_X_POSITION)
+		else if(transform.position.x <= GameplayController.GAMEOVER_X_POSITION)
 		{
 			// Zombies win!!
 			SetToIdleState();
-			GameController.instance.TriggerGameOver();
+			GameplayController.instance.TriggerGameOver();
 			_gameIsOver = true;
 		}
 
 		else if(_gameController.IsBarrierUp() 
-			&& transform.position.x <= GameController.ZOMBIES_AT_BARRIER_X_POS)
+			&& transform.position.x <= GameplayController.ZOMBIES_AT_BARRIER_X_POS)
 		{
 			//Start attacking the barrier!!
 			CurrentState = GruntState.AttackingBarrier;
@@ -91,7 +91,7 @@ public class GruntController : MonoBehaviour
 			Debug.LogFormat("[Grunt] - {0} is now Attacking BARRIER! ", gameObject.name);
 		}
 
-		else if(!_gameController.IsBarrierUp() && CurrentState != GruntState.AttackingBase && transform.position.x <= GameController.ZOMBIES_AT_BARRIER_X_POS)
+		else if(!_gameController.IsBarrierUp() && CurrentState != GruntState.AttackingBase && transform.position.x <= GameplayController.ZOMBIES_AT_BARRIER_X_POS)
 		{
 			//Start attacking the base!!
 			Debug.LogFormat("[Grunt] - {0} is now Attacking BASE! ", gameObject.name);

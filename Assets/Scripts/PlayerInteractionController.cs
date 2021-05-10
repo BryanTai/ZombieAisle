@@ -9,7 +9,7 @@ public class PlayerInteractionController : MonoBehaviour
 
 	private void Start()
 	{
-		_uiController = GameController.instance.UIController;
+		_uiController = GameplayController.instance.UIController;
 	}
 
 	private void Update()
@@ -55,7 +55,7 @@ public class PlayerInteractionController : MonoBehaviour
 	{
 		Debug.Log("EXITED TRIGGER!");
 
-		if(other.CompareTag(GameController.PLAYER_TAG))
+		if(other.CompareTag(GameplayController.PLAYER_TAG))
 		{
 			//TODO: Show interact UI over GameObject
 			_currentInteractableObject = null;

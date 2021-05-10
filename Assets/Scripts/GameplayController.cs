@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class GameplayController : MonoBehaviour
 {
 
-	public static GameController instance;
+	public static GameplayController instance;
 
 	public const float ZOMBIES_AT_BARRIER_X_POS = 4.25f; // Zombies stop here to hit barriers
 	public const float BARRIER_X_POS = 4f; //Spawn Barriers here
@@ -57,22 +57,22 @@ public class GameController : MonoBehaviour
 	{
 		if(UIController == null)
 		{
-			Debug.LogError("[GameController] UIController missing!");
+			Debug.LogError("[GameplayController] UIController missing!");
 		}
 
 		if(CameraController == null)
 		{
-			Debug.LogError("[GameController] CameraController missing!");
+			Debug.LogError("[GameplayController] CameraController missing!");
 		}
 
 		if(_barrierPrefab == null)
 		//if (BarrierPrefab == null || _barrierXPositions == null)
 		{
-			Debug.LogError("[GameController] Barriers missing!");
+			Debug.LogError("[GameplayController] Barriers missing!");
 		}
 	}
 
-	private void Start()
+	public void Initialize()
 	{
 		gamePlaying = false;
 		//TODO: Spawn in a new player instead of using the scene player!
@@ -114,7 +114,7 @@ public class GameController : MonoBehaviour
 	{
 		UIController.ShowAnnouncement("Defend the store!", delaySeconds);
 		yield return new WaitForSeconds(delaySeconds);
-		BeginGame();
+		BeginGameplay();
 	}
 
 	private void Update()
@@ -128,7 +128,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	private void BeginGame()
+	private void BeginGameplay()
 	{
 		gamePlaying = true;
 		_startTime = Time.time;

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-	private const int TOTAL_AISLES = 5;
+	private const int TOTAL_AISLES = 3;
 
 	[SerializeField] private GameObject _zombieGruntPrefab;
 
-	private GameController _gameController;
+	private GameplayController _gameController;
 
 	private int _totalZombiesToSpawn = 20; //TODO: How to keep track of zombies killed? Gamecontroller?
 	//public int MaxZombiesOnScreen;
@@ -21,11 +21,11 @@ public class ZombieSpawner : MonoBehaviour
 	private float _xSpawn = 40.0f;
 	private float[][] _ySpawnRanges = new float[][]
 	{
-		new float[] {13.4f, 10.6f}, //TODO: Store these values per Aisle or something
+		//new float[] {13.4f, 10.6f}, //TODO: Store these values per Aisle or something
 		new float[] {7.4f, 4.6f},
 		new float[] {1.4f, -1.4f},
 		new float[] {-4.6f, -7.4f},
-		new float[] {-10.6f, -13.4f},
+		//new float[] {-10.6f, -13.4f},
 	} ;
 
 	private float _spawnDelaySeconds = 5.0f; //4
@@ -51,7 +51,7 @@ public class ZombieSpawner : MonoBehaviour
 
 		_pathFinding2d = GameObject.Find("Grid").GetComponent<SimplePathFinding2D>();
 
-		_gameController = GameController.instance; //TODO: Pass this in! -btai
+		_gameController = GameplayController.instance; //TODO: Pass this in! -btai
 
 		//TODO: Preload some zombies at the start!
 	}
