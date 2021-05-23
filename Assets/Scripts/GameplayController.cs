@@ -19,6 +19,7 @@ public class GameplayController : MonoBehaviour
 
 	public readonly Vector3 BEHIND_BARRIER_START_POSITION = new Vector3(0, 0, 0); //y = 20 for Dialogue testing
 
+	public int zombiesKilled = 0;
 	public bool gamePlaying { get; private set; }
 
 	[Header("Barriers")]
@@ -98,6 +99,8 @@ public class GameplayController : MonoBehaviour
 		MainBarrier = newBarrier;
 		Debug.LogFormat("Created {0} at xPos {1}", newBarrier.gameObject.name, newBarrier.transform.position.x);
 
+		zombiesKilled = 0;
+
 		//Debug Controls
 		if (ControlToggleDebugButton != null)
 		{
@@ -142,8 +145,9 @@ public class GameplayController : MonoBehaviour
 		if(gamePlaying == true)
 		{
 			_zombieSpawner.ToggleSpawner(false);
-			UIController.ShowGameOverText();
+			//UIController.ShowGameOverText();
 			gamePlaying = false;
+			GameStateController.instance.ChangeGameState(GameState.DEFEAT);
 		}
 	}
 
@@ -151,6 +155,13 @@ public class GameplayController : MonoBehaviour
 	public void TriggerRoundOver()
 	{
 		//TODO: Implement!
+
+		if(gamePlaying == true)
+		{
+			_zombieSpawner.ToggleSpawner(false);
+			gamePlaying = false;
+			GameStateController.instance.ChangeGameState(GameState.VICTORY);
+		}
 	}
 
 	private void OnToggleControlsPressed()
@@ -195,4 +206,14 @@ public class GameplayController : MonoBehaviour
 	//    return _barriers[total - 1];
 	//}
 	#endregion
+
+	public void CountZombieKilled()
+	{
+		zombiesKilled++;
+
+		if(zombiesKilled >= _zombieSpawner.totalZombiesToSpawn)
+		{
+			TriggerRoundOver();
+		}
+	}
 }

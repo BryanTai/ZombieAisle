@@ -164,6 +164,7 @@ public class GruntController : MonoBehaviour
 		StopMoving();
 		_isDead = true;
 		_collider.enabled = false;
+		GameplayController.instance.CountZombieKilled();
 
 		StartCoroutine(PlayDeathAnimation());
 	}

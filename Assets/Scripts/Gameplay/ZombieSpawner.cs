@@ -10,7 +10,7 @@ public class ZombieSpawner : MonoBehaviour
 
 	private GameplayController _gameController;
 
-	private int _totalZombiesToSpawn = 20; //TODO: How to keep track of zombies killed? Gamecontroller?
+	public int totalZombiesToSpawn = 2; //TODO: How to keep track of zombies killed? Gamecontroller?
 	//public int MaxZombiesOnScreen;
 	//OLD
 	// private int _ySpawn = -20;
@@ -58,7 +58,7 @@ public class ZombieSpawner : MonoBehaviour
 
 	private void Update()
 	{
-		if(_enabled && _totalSpawned < _totalZombiesToSpawn)
+		if(_enabled && _totalSpawned < totalZombiesToSpawn)
 		{
 			_spawnTimer += Time.deltaTime;
 

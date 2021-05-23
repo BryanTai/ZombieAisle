@@ -9,9 +9,12 @@ public class GameStateController : MonoBehaviour
 	[SerializeField] private RestScreenController _restContainer;
 	[SerializeField] private MapScreenController _mapContainer;
 	[SerializeField] private GameObject _gameplayUIContainer;
+	[SerializeField] private GameObject _victoryContainer;
+	[SerializeField] private GameObject _defeatContainer;
 
 	[Header("Gameplay")]
 	[SerializeField] private GameplayController _gameplayController;
+	[SerializeField] private PlayerController _playerController;
 
 	private void Awake()
 	{
@@ -29,6 +32,8 @@ public class GameStateController : MonoBehaviour
 		_restContainer.gameObject.SetActive(newState == GameState.INTRO || newState == GameState.REST || newState == GameState.MAP);
 		_mapContainer.gameObject.SetActive(newState == GameState.MAP);
 		_gameplayUIContainer.SetActive(newState == GameState.GAMEPLAY);
+		_victoryContainer.SetActive(newState == GameState.VICTORY);
+		_defeatContainer.SetActive(newState == GameState.DEFEAT);
 	}
 
 	public void ChangeGameState(GameState newState)
