@@ -31,7 +31,7 @@ public class VictoryScreenController : MonoBehaviour
 				if(Input.GetButtonDown("Shoot"))
 				{
 					_state = State.FINISHED;
-					_dialogueController.HideDialogue(); //TODO: PAss in Callback function!
+					_dialogueController.HideDialogue(ReturnToRest);
 				}
 			break;
 		}
