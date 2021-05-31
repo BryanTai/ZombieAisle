@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapScreenController : MonoBehaviour
+public class WeaponsScreenController : MonoBehaviour
 {
 	[SerializeField] private Button _closeButton;
 
@@ -14,12 +14,6 @@ public class MapScreenController : MonoBehaviour
 
 	private void OnCloseButtonClicked()
 	{
-		SaveChanges();
 		GameStateController.instance.ChangeGameState(GameState.RESTDAY);
-	}
-
-	private void SaveChanges()
-	{
-		//TODO: implement
 	}
 }

@@ -27,7 +27,7 @@ public class DialogueController : MonoBehaviour
 		_dialogueText.text = dialogue;
 	}
 
-	public void HideDialogue(OnHideCallback callback = null) //TODO: Add Callback function parameter!!
+	public void HideDialogue(OnHideCallback callback = null)
 	{
 		_animator.SetTrigger("StartFadeOut");
 		_onHideCallback = callback;
@@ -36,6 +36,7 @@ public class DialogueController : MonoBehaviour
 #region Animation Events
 	public void OnFadeOutComplete()
 	{
+		Debug.Log("[DialogueController] - Fade out COMPLETE!");
 		this.gameObject.SetActive(false);
 		if(_onHideCallback != null)
 		{
