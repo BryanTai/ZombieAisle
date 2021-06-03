@@ -3,31 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlanScreenController : MonoBehaviour
+public class PlanScreenController : RestStateController
 {
-	[SerializeField] private Button _closeButton;
 	[SerializeField] private Button _startNightButton;
 
-	private void Start()
+	protected override void InitReferences()
 	{
-		_closeButton.onClick.AddListener(OnCloseButtonClicked);
+		base.InitReferences();
 		_startNightButton.onClick.AddListener(OnStartButtonClicked);
-	}
-
-	private void OnCloseButtonClicked()
-	{
-		SaveChanges();
-		GameStateController.instance.ChangeGameState(GameState.RESTDAY);
 	}
 
 	private void OnStartButtonClicked()
 	{
 		SaveChanges();
-		GameStateController.instance.ChangeGameState(GameState.RESTNIGHT);
+		_restController.SetToNight();
 	}
 
-	private void SaveChanges()
+	protected override void SaveChanges()
 	{
 		//TODO: implement
+		Debug.LogWarning("[PlanScreenController] Not implemented yet!");
 	}
 }

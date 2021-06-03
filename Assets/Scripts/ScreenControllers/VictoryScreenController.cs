@@ -39,6 +39,6 @@ public class VictoryScreenController : MonoBehaviour
 
 	private void ReturnToRest()
 	{
-		GameStateController.instance.ChangeGameState(GameState.RESTDAY);
+		GameStateController.instance.ChangeGameState(GameState.REST);
 	}
 }

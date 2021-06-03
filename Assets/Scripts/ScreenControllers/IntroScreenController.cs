@@ -12,6 +12,6 @@ public class IntroScreenController : MonoBehaviour
 
 	private void OnStartButtonClicked()
 	{
-		GameStateController.instance.ChangeGameState(GameState.RESTDAY);
+		GameStateController.instance.ChangeGameState(GameState.REST);
 	}
 }

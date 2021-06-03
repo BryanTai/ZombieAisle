@@ -3,23 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MapScreenController : MonoBehaviour
+public class MapScreenController : RestStateController
 {
-	[SerializeField] private Button _closeButton;
-
-	private void Start()
-	{
-		_closeButton.onClick.AddListener(OnCloseButtonClicked);
-	}
-
-	private void OnCloseButtonClicked()
-	{
-		SaveChanges();
-		GameStateController.instance.ChangeGameState(GameState.RESTDAY);
-	}
-
-	private void SaveChanges()
+	protected override void SaveChanges()
 	{
 		//TODO: implement
+		Debug.LogWarning("[MapScreenController] Not implemented yet!");
 	}
 }

@@ -4,12 +4,11 @@ public class GameStateController : MonoBehaviour
 {
 	public static GameStateController instance;
 
+	public RestScreenController RestController { get { return _restContainer; } }
+
 	[Header("UI Controllers")]
 	[SerializeField] private IntroScreenController _introContainer;
 	[SerializeField] private RestScreenController _restContainer;
-	[SerializeField] private MapScreenController _mapContainer;
-	[SerializeField] private WeaponsScreenController _weaponsContainer;
-	[SerializeField] private PlanScreenController _planContainer;
 
 	[SerializeField] private GameObject _gameplayUIContainer;
 	[SerializeField] private GameObject _victoryContainer;
@@ -31,14 +30,10 @@ public class GameStateController : MonoBehaviour
 
 	private void EnableGameScreen(GameState newState)
 	{
-		bool shouldShowRestScreen = newState == GameState.INTRO || newState == GameState.RESTDAY || newState == GameState.RESTNIGHT 
-		|| newState == GameState.MAP || newState == GameState.WEAPONS || newState == GameState.PLAN;
+		bool shouldShowRestScreen = newState == GameState.INTRO || newState == GameState.REST;
 
 		_introContainer.gameObject.SetActive(newState == GameState.INTRO);
 		_restContainer.gameObject.SetActive(shouldShowRestScreen);
-		_mapContainer.gameObject.SetActive(newState == GameState.MAP);
-		_weaponsContainer.gameObject.SetActive(newState == GameState.WEAPONS);
-		_planContainer.gameObject.SetActive(newState == GameState.PLAN);
 
 		_gameplayUIContainer.SetActive(newState == GameState.GAMEPLAY);
 		_victoryContainer.SetActive(newState == GameState.VICTORY);
@@ -78,7 +73,7 @@ public class GameStateController : MonoBehaviour
 				// Restart button leads to INTRO
 				// TODO: Lead back to REST once Saves work
 			break;
-			case GameState.RESTDAY:
+			case GameState.REST:
 				// FROM: INTRO, VICTORY, MAP, WEAPONS
 				// Show the REST screen
 				// Show survivors around a campfire
@@ -88,27 +83,32 @@ public class GameStateController : MonoBehaviour
 				// GAMEPLAY start button
 
 				_restContainer.ToggleAllButtons(true);
+				_restContainer.SetToDay();
 			break;
-			case GameState.RESTNIGHT:
-				// FROM: PLAN
+			// case GameState.RESTNIGHT:
+			// 	// FROM: PLAN
 
-				_restContainer.SetToNight();
+			// 	_restContainer.SetToNight();
 
-			break;
-			case GameState.MAP:
-				// FROM: REST
-				// Show the MAP screen
-				// Drag and drop different survivors to defensive positions
-				// Returns to REST
+			// break;
+			// case GameState.MAP:
+			// 	// FROM: REST
+			// 	// Show the MAP screen
+			// 	// Drag and drop different survivors to defensive positions
+			// 	// Returns to REST
 
-				_restContainer.ToggleAllButtons(false);
-			break;
-			case GameState.WEAPONS:
-				// FROM: REST
-				// Show the WEAPONS screen
-				// Show the different weapons that the player can use
-				// Returns to REST
-			break;
+			// 	_restContainer.ToggleAllButtons(false);
+			// break;
+			// case GameState.WEAPONS:
+			// 	// FROM: REST
+			// 	// Show the WEAPONS screen
+			// 	// Show the different weapons that the player can use
+			// 	// Returns to REST
+			// break;
+			// case GameState.PLAN:
+			// 	// FROM: REST
+
+			// break;
 			case GameState.OPTIONS:
 				// FROM: INTRO (for now), GAMEPLAY?
 				// Allows the player to fiddle with options
