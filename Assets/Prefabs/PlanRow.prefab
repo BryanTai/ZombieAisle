@@ -344,7 +344,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311424166920945260}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4816655639879635311}
+        m_MethodName: OnMinusButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2311424167005723758
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +369,7 @@ GameObject:
   - component: {fileID: 2311424167005723755}
   - component: {fileID: 2311424167005723752}
   m_Layer: 5
-  m_Name: AddButton
+  m_Name: PlusButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,7 +473,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2311424167005723755}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4816655639879635311}
+        m_MethodName: OnPlusButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2311424167727687221
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +611,7 @@ GameObject:
   - component: {fileID: 2311424167961830811}
   - component: {fileID: 4304970556895715320}
   - component: {fileID: 1618179700229998950}
+  - component: {fileID: 4816655639879635311}
   m_Layer: 5
   m_Name: PlanRow
   m_TagString: Untagged
@@ -654,6 +677,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4816655639879635311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311424167961830808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182d1c089ccb45b479f60e6f4012df75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rowTitle: {fileID: 2311424168502666158}
+  _hoursText: {fileID: 2311424166896170199}
+  _plusButton: {fileID: 2311424167005723752}
+  _minusButton: {fileID: 2311424166920945261}
 --- !u!1 &2311424168502666156
 GameObject:
   m_ObjectHideFlags: 0

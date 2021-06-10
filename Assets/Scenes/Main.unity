@@ -7164,7 +7164,7 @@ PrefabInstance:
     - target: {fileID: 2311424167961830808, guid: 3a5fb4e61c994174b8142fb8981aa045,
         type: 3}
       propertyPath: m_Name
-      value: PlanRow (2)
+      value: RepairRow
       objectReference: {fileID: 0}
     - target: {fileID: 2311424167961830811, guid: 3a5fb4e61c994174b8142fb8981aa045,
         type: 3}
@@ -7284,6 +7284,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 312397357}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &312397359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4816655639879635311, guid: 3a5fb4e61c994174b8142fb8981aa045,
+    type: 3}
+  m_PrefabInstance: {fileID: 312397357}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182d1c089ccb45b479f60e6f4012df75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &315463262
 GameObject:
   m_ObjectHideFlags: 0
@@ -8130,6 +8142,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _closeButton: {fileID: 1450668887}
   _startNightButton: {fileID: 755086015}
+  _hoursAvailableText: {fileID: 546623489}
+  _planRows:
+  - {fileID: 2311424168306952446}
+  - {fileID: 1826529771}
+  - {fileID: 312397359}
 --- !u!1 &511438224
 GameObject:
   m_ObjectHideFlags: 0
@@ -106232,7 +106249,7 @@ PrefabInstance:
     - target: {fileID: 2311424167961830808, guid: 3a5fb4e61c994174b8142fb8981aa045,
         type: 3}
       propertyPath: m_Name
-      value: PlanRow (1)
+      value: SurvivorsRow
       objectReference: {fileID: 0}
     - target: {fileID: 2311424167961830811, guid: 3a5fb4e61c994174b8142fb8981aa045,
         type: 3}
@@ -106352,6 +106369,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1826529769}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1826529771 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4816655639879635311, guid: 3a5fb4e61c994174b8142fb8981aa045,
+    type: 3}
+  m_PrefabInstance: {fileID: 1826529769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182d1c089ccb45b479f60e6f4012df75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1830147485
 GameObject:
   m_ObjectHideFlags: 0
@@ -107558,7 +107587,7 @@ PrefabInstance:
     - target: {fileID: 2311424167961830808, guid: 3a5fb4e61c994174b8142fb8981aa045,
         type: 3}
       propertyPath: m_Name
-      value: PlanRow
+      value: WeaponsRow
       objectReference: {fileID: 0}
     - target: {fileID: 2311424167961830811, guid: 3a5fb4e61c994174b8142fb8981aa045,
         type: 3}
@@ -107667,6 +107696,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a5fb4e61c994174b8142fb8981aa045, type: 3}
+--- !u!114 &2311424168306952446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4816655639879635311, guid: 3a5fb4e61c994174b8142fb8981aa045,
+    type: 3}
+  m_PrefabInstance: {fileID: 2311424168306952445}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182d1c089ccb45b479f60e6f4012df75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6497101463621361805
 PrefabInstance:
   m_ObjectHideFlags: 0
