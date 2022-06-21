@@ -62,10 +62,13 @@ public class RestScreenController : MonoBehaviour
 		_mapContainer.gameObject.SetActive(currentState == RestState.MAP);
 		_weaponsContainer.gameObject.SetActive(currentState == RestState.WEAPON);
 		_planContainer.gameObject.SetActive(currentState == RestState.PLAN);
+
+		ToggleAllButtons(currentState == RestState.NONE);
 	}
 
 	public void ToggleAllButtons(bool enabled)
 	{
+		//TODO: Disable the buttons without hiding them?
 		_buttonContainer.SetActive(enabled);
 	}
 
